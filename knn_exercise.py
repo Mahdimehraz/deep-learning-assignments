@@ -215,7 +215,6 @@ Y_train_folds=np.array_split(Y_train, num_folds)
 k_to_accuracies = {}
 
 ################################################################################
-# TODO:                                                                        #
 # Perform k-fold cross validation to find the best value of k. For each        #
 # possible value of k, run the k-nearest-neighbor algorithm num_folds times,   #
 # where in each case you use all but one of the folds as training data and the #
@@ -225,7 +224,25 @@ k_to_accuracies = {}
 for k in k_choices:
     k_to_accuracies[k]=[]
     for j in range(num_folds):
-        pass  #delete 'pass' and write your code here
+        X_val=X_train_folds[j]
+        Y_val=Y_train_folds[j]
+
+        X_train_cv=np.concatenate(
+            [X_train_folds[i] for i in range(num_folds) if i != j]
+        )
+
+        Y_train_cv = np.concatenate(
+            [Y_train_folds[i] for i in range(num_folds) if i != j]
+        )
+
+        classifier = KNearestNeighbor()
+        classifier.train(X_train_cv, Y_train_cv)
+
+        Y_pred = classifier.predict(X_val, k=k)
+
+        accuracy = np.mean(Y_pred == Y_val)
+
+        k_to_accuracies[k].append(accuracy)
 ################################################################################
 #                                 END OF YOUR CODE                             #
 ################################################################################
