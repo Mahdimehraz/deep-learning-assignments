@@ -3,6 +3,9 @@
 import numpy as np
 from random import shuffle
 
+from pip._internal import req
+
+
 def svm_loss_naive(W, X, Y, reg):
   """
   Structured SVM loss function, naive implementation (with loops).
@@ -47,7 +50,6 @@ def svm_loss_naive(W, X, Y, reg):
         #############################################################################
 
   #################################################################################
-  # TODO:                                                                         #
   # Right now the loss and the gradient is a sum over all training examples, but  #
   # we want it to be an average instead,                                          #
   # So average out grad and loss by dividing by num_train.                        #
@@ -55,6 +57,11 @@ def svm_loss_naive(W, X, Y, reg):
   # Then, add regularization loss to the loss and                                 #
   # regularization gradienet to dW                                                #
   #################################################################################
+  loss /=num_train
+  dW /=num_train
+
+  loss += reg * np.sum(W * W)
+  dW += 2 * reg * W
 
   return loss, dW
 
