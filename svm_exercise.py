@@ -21,7 +21,7 @@ from utilities.load_cifar10 import load_CIFAR10
 # CIFAR-10 Data Loading and Preprocessing
 # Load the raw CIFAR-10 data.
 
-cifar10_dir = 'C:/Users/Maryam/Desktop/Documents/Courses/5_Deep learning/Assignments/data/cifar-10-batches-py'
+cifar10_dir = './dataset/cifar-10-batches-py'
 
 # Cleaning up variables to prevent loading data multiple times (which may cause memory issue)
 try:
