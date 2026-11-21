@@ -43,7 +43,6 @@ class LinearClassifier(object):
             Y_batch = None
 
             #########################################################################
-            # TODO:                                                                 #
             # Sample batch_size elements from the training data and their           #
             # corresponding labels to use in this round of gradient descent.        #
             # Store the data in X_batch and their corresponding labels in           #
@@ -53,7 +52,9 @@ class LinearClassifier(object):
             # Hint: Use np.random.choice to generate indices. Sampling with         #
             # replacement is faster than sampling without replacement.              #
             #########################################################################
-            pass
+            batch_indices = np.random.choice(num_train, batch_size)
+            X_batch = X[batch_indices]
+            Y_batch = Y[batch_indices]
             #########################################################################
             #                       END OF YOUR CODE                                #
             #########################################################################
