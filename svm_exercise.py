@@ -288,7 +288,6 @@ best_val = -1  # The highest validation accuracy that we have seen so far.
 best_svm = None  # The LinearSVM object that achieved the highest validation rate.
 
 ################################################################################
-# TODO:                                                                        #
 # Write code that chooses the best hyperparameters by tuning on the validation #
 # set. For each combination of hyperparameters, train a linear SVM on the      #
 # training set, compute its accuracy on the training and validation sets, and  #
@@ -302,14 +301,23 @@ best_svm = None  # The LinearSVM object that achieved the highest validation rat
 # code with a larger value for num_iters.                                      #
 ################################################################################
 for lr in learning_rates:
-	for reg in regularization_strengths:
-		pass
-		# instantiate classifier
-		# train the classifier
-		# make predictions
-		# compute train and validation accuracies
-		# update the best model
+    for reg in regularization_strengths:
+        # instantiate classifier
+        svm = LinearSVM()
+        # train the classifier
+        svm.train(X_train, Y_train, learning_rate=lr, reg=reg, num_iters=1500)
+        # make predictions
+        Y_train_pred = svm.predict(X_train)
+        Y_val_pred = svm.predict(X_val)
+        # compute train and validation accuracies
+        train_accuracy = np.mean(Y_train == Y_train_pred)
+        val_accuracy = np.mean(Y_val == Y_val_pred)
+        # update the best model
+        if val_accuracy > best_val:
+            best_val = val_accuracy
+            best_svm = svm
         # store train and validation accuracies for current lr and reg in "result" dictionary
+        results[(lr, reg)] = [train_accuracy, val_accuracy]
 ################################################################################
 #                              END OF YOUR CODE                                #
 ################################################################################
