@@ -3,9 +3,6 @@
 import numpy as np
 from random import shuffle
 
-from pip._internal import req
-
-
 def svm_loss_naive(W, X, Y, reg):
   """
   Structured SVM loss function, naive implementation (with loops).
@@ -77,14 +74,16 @@ def svm_loss_vectorized(W, X, Y, reg):
   num_train = X.shape[0]
 
   #############################################################################
-  # TODO:                                                                     #
   # Implement a vectorized version of the structured SVM loss, storing the    #
   # result in loss.                                                           #
   #############################################################################
-  # compute scores  (N x C)
-  # grab correct class scores
-  # compute margins
-  # add reg loss to the loss
+  scores = X.dot(W)
+  correct_class_scores = scores[np.arange(num_train), Y]
+  margins = scores - correct_class_scores[:, np.newaxis] + 1
+  margins[np.arange(num_train) , Y] = 0
+  margins = np.maximum(0, margins)
+  loss = np.sum(margins) / num_train
+  loss += reg * np.sum(W * W)
   #############################################################################
   #                             END OF YOUR CODE                              #
   #############################################################################
