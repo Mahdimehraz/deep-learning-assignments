@@ -76,20 +76,28 @@ def softmax_loss_vectorized(W, X, Y, reg):
   num_classes = W.shape[1]
 
   #############################################################################
-  # TODO: Compute the softmax loss and its gradient using no explicit loops.  #
   # Store the loss in loss and the gradient in dW. If you are not careful     #
   # here, it is easy to run into numeric instability. Don't forget the        #
   # regularization!                                                           #
   #############################################################################
   # compute unnormlaized log probs
   # unorm_log_probs = ??
+  unorm_log_probs = X.dot(W)
   # unorm_log_probs -= np.max(unorm_log_probs)
-
+  unorm_log_probs -= np.max(unorm_log_probs, axis=1, keepdims=True)
   # compute class probabilities
+  exp_scores = np.exp(unorm_log_probs)
+  probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)
 
   # compute data and reg loss
+  correct_class_probs = probs[np.arange(num_train), Y]
+  loss = -np.sum(np.log(correct_class_probs)) / num_train
+  loss += reg * np.sum(W * W)
 
   # compute gradient dW
+  probs[np.arange(num_train), Y] -= 1
+  dW = X.T.dot(probs) / num_train
+  dW += 2 * reg * W
   #############################################################################
   #                          END OF YOUR CODE                                 #
   #############################################################################
