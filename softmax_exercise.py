@@ -24,7 +24,7 @@ def get_CIFAR10_data(num_training=49000, num_validation=1000, num_test=1000, num
     SVM exercise, but condensed to a single function.
     """
     # Load the raw CIFAR-10 data
-    cifar10_dir = 'C:/Users/Maryam/Desktop/Documents/Courses/5_Deep learning/Assignments/data/cifar-10-batches-py'
+    cifar10_dir = './dataset/cifar-10-batches-py'
 
     X_train, Y_train, X_test, Y_test = load_CIFAR10(cifar10_dir)
 
