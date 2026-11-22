@@ -73,11 +73,13 @@ class TwoLayerNet(object):
         scores = None    # array of shape (N, C)
 
         #############################################################################
-        # TODO: Perform the forward pass, computing the class scores for the input. #
+        # Perform the forward pass, computing the class scores for the input.       #
         # Store the result in the scores variable, which should be an array of      #
         # shape (N, C).                                                             #
         #############################################################################
-        pass
+        hidden_layer = X.dot(W1) + b1
+        hidden_layer = np.maximum(0, hidden_layer)
+        scores = hidden_layer.dot(W2) + b2
         #############################################################################
         #                              END OF YOUR CODE                             #
         #############################################################################
