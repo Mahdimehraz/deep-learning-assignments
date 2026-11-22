@@ -284,7 +284,7 @@ show_net_weights(net)
 best_net = None # store the best model into this
 
 #################################################################################
-# TODO: Tune hyperparameters using the validation set.                          #
+#       Tune hyperparameters using the validation set.                          #
 # Store your best trained  model in best_net.                                   #
 #                                                                               #
 # To help debug your network, it may help to use visualizations similar to the  #
@@ -296,7 +296,45 @@ best_net = None # store the best model into this
 # automatically like we did in the previous exercises and                       #
 # on the slides 73-75 of Lecture05_Training NN_1 (random search).               #                                               #
 #################################################################################
-pass
+best_val = -1
+best_params = None
+best_stats = None
+results = {}
+
+np.random.seed(42)
+num_trials = 20
+
+for trial in range(num_trials):
+    # Sample hyperparameters (log-uniform for lr and reg)
+    hidden_size = int(np.random.choice([100, 200, 300, 500]))
+    lr = float(10 ** np.random.uniform(-3.4, -2.5))
+    reg = float(10 ** np.random.uniform(-2, 0))
+    lr_decay = 0.95
+
+    net = TwoLayerNet(input_size, hidden_size, num_classes)
+    stats = net.train(X_train, Y_train, X_val, Y_val,
+                      num_iters=2000, batch_size=200,
+                      learning_rate=lr, learning_rate_decay=lr_decay,
+                      reg=reg, verbose=False)
+
+    train_acc = (net.predict(X_train) == Y_train).mean()
+    val_acc = (net.predict(X_val) == Y_val).mean()
+    results[(hidden_size, lr, reg)] = (train_acc, val_acc)
+
+    print('trial %2d | H=%3d lr=%.2e reg=%.3f | train acc %.3f | val acc %.3f'
+          % (trial, hidden_size, lr, reg, train_acc, val_acc))
+
+    if val_acc > best_val:
+        best_val = val_acc
+        best_net = net
+        best_stats = stats
+        best_params = (hidden_size, lr, reg)
+
+print('Best validation accuracy: %.3f with H=%d, lr=%.2e, reg=%.3f'
+      % ((best_val,) + best_params))
+
+# plot training curves of the best model
+plot_loss_acc(best_stats)
 #################################################################################
 #                               END OF YOUR CODE                                #
 #################################################################################
