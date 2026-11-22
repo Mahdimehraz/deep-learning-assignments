@@ -180,12 +180,13 @@ class TwoLayerNet(object):
             loss_history.append(loss)
 
             #########################################################################
-            # TODO: Use the gradients in the grads dictionary to update the         #
+            #       Use the gradients in the grads dictionary to update the         #
             # parameters of the network (stored in the dictionary self.params)      #
             # using stochastic gradient descent. You'll need to use the gradients   #
             # stored in the grads dictionary defined above.                         #
             #########################################################################
-            pass
+            for param in self.params:
+                self.params[param] -= learning_rate * grads[param]
             #########################################################################
             #                             END OF YOUR CODE                          #
             #########################################################################
