@@ -166,12 +166,28 @@ learning_rates = [3e-7, 5e-8, 9e-8]       #[1e-7, 5e-5]
 regularization_strengths = [3e5, 5e5]     #[2.5e4, 5e4]
 
 ################################################################################
-# TODO:                                                                        #
 # Use the validation set to set the learning rate and regularization strength. #
 # This should be identical to the validation that you did for the SVM; save    #
 # the best trained softmax classifer in best_softmax.                          #
 ################################################################################
-pass
+for lr in learning_rates:
+    for reg in regularization_strengths:
+        # instantiate classifier
+        softmax = LinearSoftmax()
+        # train the classifier
+        softmax.train(X_train, Y_train, learning_rate=lr, reg=reg, num_iters=1500)
+        # make predictions
+        Y_train_pred = softmax.predict(X_train)
+        Y_val_pred = softmax.predict(X_val)
+        # compute train and validation accuracies
+        train_accuracy = np.mean(Y_train == Y_train_pred)
+        val_accuracy = np.mean(Y_val == Y_val_pred)
+        # update the best model
+        if val_accuracy > best_val:
+            best_val = val_accuracy
+            best_softmax = softmax
+        # store train and validation accuracies for current lr and reg in "result" dictionary
+        results[(lr, reg)] = [train_accuracy, val_accuracy]
 ################################################################################
 #                              END OF YOUR CODE                                #
 ################################################################################
