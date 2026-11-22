@@ -165,10 +165,12 @@ class TwoLayerNet(object):
             Y_batch = None
 
             #########################################################################
-            # TODO: Create a random minibatch of training data and labels, storing  #
+            #       Create a random minibatch of training data and labels, storing  #
             # them in X_batch and Y_batch respectively.                             #
             #########################################################################
-            pass
+            indices = np.random.choice(num_train, batch_size)
+            X_batch = X[indices]
+            Y_batch = Y[indices]
             #########################################################################
             #                             END OF YOUR CODE                          #
             #########################################################################
