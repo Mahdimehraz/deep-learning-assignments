@@ -112,11 +112,19 @@ class TwoLayerNet(object):
         grads = {}
 
         #############################################################################
-        # TODO: Compute the backward pass, computing the derivatives of the weights #
+        #       Compute the backward pass, computing the derivatives of the weights #
         # and biases. Store the results in the grads dictionary. For example,       #
         # grads['W1'] should store the gradient on W1, and be a matrix of same size #
         #############################################################################
-        pass
+        dscores = probs.copy()
+        dscores[np.arange(N), Y] -= 1
+        dscores /= N
+        grads['W2'] = hidden_layer.T.dot(dscores) + 2 * reg * W2
+        grads['b2'] = np.sum(dscores, axis=0)
+        dhidden = dscores.dot(W2.T)
+        dhidden[hidden_layer <= 0] = 0
+        grads['W1'] = X.T.dot(dhidden) + 2 * reg * W1
+        grads['b1'] = np.sum(dhidden, axis=0)
         #############################################################################
         #                              END OF YOUR CODE                             #
         #############################################################################
