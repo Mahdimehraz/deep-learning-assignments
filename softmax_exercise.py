@@ -162,8 +162,8 @@ results = {}
 best_val = -1
 best_softmax = None
 
-learning_rates = [3e-7, 5e-8, 9e-8]       #[1e-7, 5e-5]
-regularization_strengths = [3e5, 5e5]     #[2.5e4, 5e4]
+learning_rates = [1e-7, 3e-7, 5e-7, 1e-6]
+regularization_strengths = [1e4, 1e5, 3e5, 5e5]    #[2.5e4, 5e4]
 
 ################################################################################
 # Use the validation set to set the learning rate and regularization strength. #
