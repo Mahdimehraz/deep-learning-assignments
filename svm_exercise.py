@@ -275,8 +275,8 @@ print('validation accuracy: %f' % (np.mean(Y_val == Y_val_pred), ))
 # rates and regularization strengths; if you are careful you should be able to
 # get a classification accuracy of about 0.4 on the validation set.
 
-learning_rates = [3e-7, 5e-8, 9e-8]
-regularization_strengths = [3e5, 5e5]
+learning_rates = [2e-7, 3e-7, 4e-7, 5e-7, 6e-7]
+regularization_strengths = [500, 750, 1000, 1500, 2000]
 
 # 'results' is dictionary mapping tuples of the form
 # (learning_rate, regularization_strength) to tuples of the form
